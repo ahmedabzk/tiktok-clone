@@ -5,6 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controllers/auth_controller.dart';
 
+// pages
+const pages = [
+  Text('Home Screen'),
+  Text('Search Screen'),
+  Text('Add Screen'),
+  Text('Messages Screen'),
+  Text('Profile Screen'),
+];
+
 // colours
 const backgroundColour = Colors.black;
 var buttonColour = Colors.red[400];

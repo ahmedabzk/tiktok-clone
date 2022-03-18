@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides, prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -5,13 +7,34 @@ import 'dart:io';
 import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/models/user.dart' as model;
 import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
+import 'package:tiktok_clone/views/screens/home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<File?> _pickedImage;
 
+  late Rx<User?> _user;
+
   // getter
   File? get profilePhoto => _pickedImage.value;
+
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(firebaseAuth.currentUser);
+    _user.bindStream(firebaseAuth.authStateChanges());
+    ever(_user, _setInitialScreen);
+  }
+
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => LoginScreen());
+    } else {
+      Get.offAll(() => HomeScreen());
+    }
+  }
+
   // pick image
   void pickImage() async {
     final pickedImage =
@@ -67,8 +90,10 @@ class AuthController extends GetxController {
     }
   }
 
+// sigin user function
   void loginUser(String email, String password) async {
     try {
+      // confirm the feilds are not empty
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
