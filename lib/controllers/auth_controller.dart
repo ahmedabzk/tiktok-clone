@@ -66,4 +66,24 @@ class AuthController extends GetxController {
       );
     }
   }
+
+  void loginUser(String email, String password) async {
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        await firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password);
+        print('login success');
+      } else {
+        Get.snackbar(
+          'error logging in ',
+          'incorrerect email/password',
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'error logging in ',
+        e.toString(),
+      );
+    }
+  }
 }

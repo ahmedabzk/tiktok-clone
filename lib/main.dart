@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: "TikTok clone",
       theme:
           ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColour),
-      home: SignUpScreen(),
+      home: LoginScreen(),
     );
   }
 }
