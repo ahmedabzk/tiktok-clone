@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_types_as_parameter_names, non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/constants.dart';
@@ -12,7 +14,10 @@ class AddVideoScreen extends StatelessWidget {
     final video = await ImagePicker().pickVideo(source: src);
     if (video != null) {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => ConfirmScreen())
+        MaterialPageRoute(builder: (context) => ConfirmScreen(
+                videoFile: File(video.path),
+                videoPath: video.path,
+              ))
       );
     }
   }
